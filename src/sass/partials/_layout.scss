@@ -1,10 +1,24 @@
 .container{
-    width: 1920px;
-    margin:0 auto;
-    padding: 0 20px;
+  width: 1920px;
+  margin: 0 auto;
+  padding: 0 ;
 }
 
 .logo{
-    margin: 0 410px;
-    width: 1098px;
+  margin: 0 410px;
+  width: 1098px;
+}
+
+section{
+  margin: 100px 0;
+}
+
+#pages {
+  > * {
+    display: none;
+  }
+  
+  > .active {
+    display: block;
+  }
 }

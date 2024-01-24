@@ -1,11 +1,11 @@
 *, *::before, *::after {
-    box-sizing: border-box;
-  }
+  box-sizing: border-box;
+}
 
 body{
-    margin: 0;
-    background-color: $color-dark;
-    color: $color-light;
-    font-family: $font-text;
-    font-weight: $font-regular;
+  margin: 0;
+  background-color: $color-dark;
+  color: $color-light;
+  font-family: $font-text;
+  font-weight: $font-regular;
 }
