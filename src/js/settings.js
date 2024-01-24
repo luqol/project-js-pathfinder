@@ -4,3 +4,16 @@ export const className ={
   }
 };
 
+export const select = {
+  pageID: {
+    about: 'about',
+    finder: 'finder',
+  },
+  containerOf: {
+    pages: '#pages',
+  },
+  nav: {
+    links: '.main_nav a',
+  },
+};
+
