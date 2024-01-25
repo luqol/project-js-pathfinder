@@ -14,20 +14,27 @@
 .map{
   display: flex;
   flex-wrap: wrap;
-  width: 750px;
+  width: 800px;
   margin: 100px 0 50px 0;
   cursor: pointer;
+  justify-content: center;
 }
 
 .box{
-  width: 75px;
-  height: 75px;
+  width: 80px;
+  height: 80px;
   border-top: 5px solid $color-light;
   border-left: 5px solid $color-light;
-
   &.active{
     background-color: $color-path;
   }
+  &.start{
+    background-color: $color-start;
+  }
+  &.end{
+    background-color: $color-end;
+  }
+
 }
 
 .box-bottom{
