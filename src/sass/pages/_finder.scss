@@ -1,34 +1,39 @@
 .finder-wrapper{
-    text-align: center;
-    height: 1000px;
-    position: relative;
+  text-align: center;
+  height: 1000px;
+  position: relative;
 }
 
 .finder_body{
-    position: absolute;
-    top: -60%;
-    left: 50%;
-    transform: translate(-50%, 0%);
+  position: absolute;
+  top: -60%;
+  left: 50%;
+  transform: translate(-50%, 0%);
 }
 
 .map{
-    display: flex;
-    flex-wrap: wrap;
-    width: 750px;
-    margin: 100px 0 50px 0;
+  display: flex;
+  flex-wrap: wrap;
+  width: 750px;
+  margin: 100px 0 50px 0;
+  cursor: pointer;
 }
 
 .box{
-    width: 75px;
-    height: 75px;
-    border-top: 5px solid $color-light;
-    border-left: 5px solid $color-light;
+  width: 75px;
+  height: 75px;
+  border-top: 5px solid $color-light;
+  border-left: 5px solid $color-light;
+
+  &.active{
+    background-color: $color-path;
+  }
 }
 
 .box-bottom{
-    border-bottom: 5px solid $color-light;
+  border-bottom: 5px solid $color-light;
 }
 
 .box-right{
-    border-right: 5px solid $color-light;
+  border-right: 5px solid $color-light;
 }

@@ -11,31 +11,34 @@
 }
 
 .first_img{
-    position: absolute;
-    width: 898px;
-    height: 637px;
-    top: -57%;
-    left: 7%;
-    img{
-        width: 100%;
-        height: 100%;
-    }
+  position: absolute;
+  width: 898px;
+  height: 637px;
+  top: -57%;
+  left: 7%;
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .secound_img{
-    position:relative;
-    width: 1368px;
-    height: 976px;
-    margin-right: 0;
-    margin-left: auto;
-    padding-top: 200px;
-    img{
-        width: 100%;
-        height: 100%;
-    }
-    .secound_txt{
-        position: absolute;
-        top: 30%;
-        left:-28%;
-    }
+  position: relative;
+  width: 1368px;
+  height: 976px;
+  margin-right: 0;
+  margin-left: auto;
+  padding-top: 200px;
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
+
+  .secound_txt{
+    position: absolute;
+    top: 30%;
+    left: -28%;
+  }
 }

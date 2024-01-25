@@ -1,6 +1,15 @@
 import {select, className} from './settings.js';
+import Finder from './components/Finder.js';
 
 const app = {
+  initFinder: function(){
+    const thisApp = this;
+
+    const elem = document.querySelector(select.containerOf.finder);
+
+    thisApp.finder = new Finder(elem);
+  },
+
   initPages: function(){
     const thisApp = this;
     
@@ -48,6 +57,7 @@ const app = {
     const thisApp = this;
     
     thisApp.initPages();
+    thisApp.initFinder();
   },
   
 };
