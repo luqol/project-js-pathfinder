@@ -5,6 +5,7 @@ class Finder{
     const thisFinder = this;
     thisFinder.map = [];
     thisFinder.startEnd = [];
+    thisFinder.path = [];
 
     thisFinder.getElements(wrapper);
     thisFinder.initActions();
@@ -52,7 +53,7 @@ class Finder{
     if(thisFinder.startEnd[0] == undefined){
       clickedElement.classList.add(className.map.start);
       thisFinder.startEnd.push(coord);
-    } else if(thisFinder.startEnd[0] == coord ){
+    } else if(thisFinder.startEnd[0] == coord && thisFinder.startEnd[1] == undefined){
       clickedElement.classList.remove(className.map.start);
       thisFinder.startEnd.splice(0,1);
     }else if(thisFinder.startEnd[1] == undefined){
@@ -122,6 +123,7 @@ class Finder{
     } else if(phase == settings.finderPhase.secound.btn){
       thisFinder.dom.title.innerHTML = settings.finderPhase.third.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.third.btn;
+      thisFinder.bestRoute();
     }else if(phase == settings.finderPhase.third.btn){
       thisFinder.dom.title.innerHTML = settings.finderPhase.first.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.first.btn;
@@ -138,6 +140,9 @@ class Finder{
 
   }
 
+  bestRoute(){
+
+  }
 }
 
 export default Finder;
