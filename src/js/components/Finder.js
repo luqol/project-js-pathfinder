@@ -1,17 +1,18 @@
 import { className, select, settings } from '../settings.js';
 
-class Finder{
-  constructor(wrapper){
+class Finder {
+  constructor(wrapper) {
     const thisFinder = this;
     thisFinder.map = [];
     thisFinder.startEnd = [];
-    thisFinder.path = [];
+    thisFinder.paths = [];
+    thisFinder.bestRoute = [];
 
     thisFinder.getElements(wrapper);
     thisFinder.initActions();
 
   }
-  getElements(wrapper){
+  getElements(wrapper) {
     const thisFinder = this;
 
     thisFinder.dom = {};
@@ -21,92 +22,87 @@ class Finder{
     thisFinder.dom.btn = thisFinder.dom.wrapper.querySelector(select.finder.btn);
     thisFinder.dom.title = thisFinder.dom.wrapper.querySelector(select.finder.title);
     thisFinder.dom.boxes = thisFinder.dom.wrapper.querySelectorAll(select.finder.boxes);
-    
+
   }
 
-  initActions(){
+  initActions() {
     const thisFinder = this;
 
-    thisFinder.dom.map.addEventListener('click', function(event){
+    thisFinder.dom.map.addEventListener('click', function (event) {
       const clickedElement = event.target;
-      
-      if (clickedElement.classList.contains(className.map.box) 
-          && thisFinder.dom.title.innerHTML == settings.finderPhase.first.info){
+
+      if (clickedElement.classList.contains(className.map.box)
+        && thisFinder.dom.title.innerHTML == settings.finderPhase.first.info) {
         thisFinder.drawRoutes(clickedElement);
-      } else if (clickedElement.classList.contains(className.map.box) 
-      && clickedElement.classList.contains(className.map.active)
-      && thisFinder.dom.title.innerHTML == settings.finderPhase.secound.info){
+      } else if (clickedElement.classList.contains(className.map.box)
+        && clickedElement.classList.contains(className.map.active)
+        && thisFinder.dom.title.innerHTML == settings.finderPhase.secound.info) {
         thisFinder.startFinish(clickedElement);
-      } 
+      }
     });
 
-    thisFinder.dom.btn.addEventListener('click', function(event){
+    thisFinder.dom.btn.addEventListener('click', function (event) {
       event.preventDefault();
       thisFinder.changePhase(event.target.innerHTML);
     });
   }
 
-  startFinish(clickedElement){
+  startFinish(clickedElement) {
     const thisFinder = this;
     const coord = clickedElement.classList[0];
-    
-    if(thisFinder.startEnd[0] == undefined){
+
+    if (thisFinder.startEnd[0] == undefined) {
       clickedElement.classList.add(className.map.start);
       thisFinder.startEnd.push(coord);
-    } else if(thisFinder.startEnd[0] == coord && thisFinder.startEnd[1] == undefined){
+    } else if (thisFinder.startEnd[0] == coord && thisFinder.startEnd[1] == undefined) {
       clickedElement.classList.remove(className.map.start);
-      thisFinder.startEnd.splice(0,1);
-    }else if(thisFinder.startEnd[1] == undefined){
+      thisFinder.startEnd.splice(0, 1);
+    } else if (thisFinder.startEnd[1] == undefined) {
       clickedElement.classList.add(className.map.end);
       thisFinder.startEnd.push(coord);
-    } else if(thisFinder.startEnd[1] == coord ){
+    } else if (thisFinder.startEnd[1] == coord) {
       clickedElement.classList.remove(className.map.end);
-      thisFinder.startEnd.splice(1,1);
+      thisFinder.startEnd.splice(1, 1);
     }
 
   }
 
-  drawRoutes(clickedElement){
+  drawRoutes(clickedElement) {
     const thisFinder = this;
     const coord = clickedElement.classList[0];
 
     /* mark start box */
-    if (thisFinder.map.length == 0 ){
+    if (thisFinder.map.length == 0) {
       clickedElement.classList.add(className.map.active);
       thisFinder.map.push(coord);
     } /* remove box if exist in map arr */
-    else if(thisFinder.map.includes(coord)){
+    else if (thisFinder.map.includes(coord)) {
       clickedElement.classList.remove(className.map.active);
       thisFinder.removePath(coord);
     }/* check if box is adjected to the other box */
-    else if(thisFinder.addPath(coord)){
+    else if (thisFinder.addPath(coord)) {
       clickedElement.classList.add(className.map.active);
       thisFinder.map.push(coord);
-    } else{
+    } else {
       console.log('to far from path');
     }
 
     //console.log(thisFinder.map);
   }
 
-  removePath(coord){
+  removePath(coord) {
     const thisFinder = this;
     const index = thisFinder.map.indexOf(coord);
     thisFinder.map.splice(index, 1);
   }
 
-  addPath(coord){
+  addPath(coord) {
     const thisFinder = this;
-    const adjectedPoints = [
-      (parseInt(coord[0])-1).toString() + coord[1],
-      (parseInt(coord[0])+1).toString() + coord[1],
-      coord[0] + (parseInt(coord[1])+1).toString(),
-      coord[0] + (parseInt(coord[1])-1).toString(),
-    ];
+    const adjectedPoints = thisFinder.adjectedPoint(coord);
 
-    for(let points of thisFinder.map){
-      for (let adjectedPoint of adjectedPoints){
-        if(points == adjectedPoint){
+    for (let points of thisFinder.map) {
+      for (let adjectedPoint of adjectedPoints) {
+        if (points == adjectedPoint) {
           return true;
         }
       }
@@ -114,23 +110,36 @@ class Finder{
     return false;
   }
 
-  changePhase(phase){
+  adjectedPoint(coord) {
+    const adjectedPoints = [
+      (parseInt(coord[0]) - 1).toString() + coord[1], //up
+      (parseInt(coord[0]) + 1).toString() + coord[1], //down
+      coord[0] + (parseInt(coord[1]) + 1).toString(), //right
+      coord[0] + (parseInt(coord[1]) - 1).toString(), //left
+    ];
+    return adjectedPoints;
+  }
+
+  changePhase(phase) {
     const thisFinder = this;
-    if(phase == settings.finderPhase.first.btn){
+    if (phase == settings.finderPhase.first.btn) {
       thisFinder.dom.title.innerHTML = settings.finderPhase.secound.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.secound.btn;
-      thisFinder.dom.path = thisFinder.dom.wrapper.querySelectorAll(select.finder.path);
-    } else if(phase == settings.finderPhase.secound.btn){
+
+    } else if (phase == settings.finderPhase.secound.btn) {
       thisFinder.dom.title.innerHTML = settings.finderPhase.third.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.third.btn;
-      thisFinder.bestRoute();
-    }else if(phase == settings.finderPhase.third.btn){
+      thisFinder.bestPath();
+    } else if (phase == settings.finderPhase.third.btn) {
       thisFinder.dom.title.innerHTML = settings.finderPhase.first.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.first.btn;
       thisFinder.map = [];
       thisFinder.startEnd = [];
-      for(let box of thisFinder.dom.boxes){
-        if(box.classList.contains(className.map.active)){
+      thisFinder.paths = [];
+      thisFinder.correctPaths = [];
+      thisFinder.bestRoute =[];
+      for (let box of thisFinder.dom.boxes) {
+        if (box.classList.contains(className.map.active)) {
           box.classList.remove(className.map.active);
           box.classList.remove(className.map.start);
           box.classList.remove(className.map.end);
@@ -140,9 +149,99 @@ class Finder{
 
   }
 
-  bestRoute(){
+  bestPath() {
+    const thisFinder = this;
+
+    thisFinder.paths.push([thisFinder.startEnd[0]]);
+
+    thisFinder.checkPath();
+
+    thisFinder.choosePath();
+
+    thisFinder.drawBestRoute();
+
+    console.log('map', thisFinder.map);
+    console.log('startEnd', thisFinder.startEnd);
+    console.log('paths', thisFinder.paths);
+    console.log('correctPaths', thisFinder.correctPaths);
+    console.log('bestRoute', thisFinder.bestRoute);
+  }
+
+  checkPath() {
+    const thisFinder = this;
+
+    for (let path of thisFinder.paths) {
+      //console.log(' ');
+      //console.log('Nowa sciezka ', thisFinder.paths.indexOf(path));
+      //console.log('insex: ', thisFinder.paths.indexOf(path), 'sciezka: ', path);
+
+      for(let i = 0; i < path.length; i++){
+        //console.log(' ');
+        //console.log('iteracja nr ', i);
+        const lastPoint = path[path.length - 1];
+        //console.log('last point', lastPoint);
+        const adjectedPoints = thisFinder.adjectedPoint(lastPoint);
+        let newPath = false;
+        if(lastPoint != thisFinder.startEnd[1]){
+          for (const adPoint of adjectedPoints) {
+            for (const coord of thisFinder.map) {
+              if (adPoint == coord && !path.includes(adPoint)) {
+                //console.log('wspolne pkt', adPoint);
+                if (newPath == false && adPoint != lastPoint && adPoint != thisFinder.startEnd[0]) {
+                  //console.log('dodanie pkt', adPoint);
+                  path.push(adPoint);
+                  //console.log('akutalna scieska', path);
+                  newPath = true;
+                } else if (adPoint != lastPoint && adPoint != thisFinder.startEnd[0]) {
+                  //console.log('dodanie nowej sciezki');
+                  thisFinder.paths.push(path.slice(0, -1));
+                  thisFinder.paths[thisFinder.paths.length - 1].push(adPoint);
+                  //console.log('nowa sciezka', thisFinder.paths.length - 1, 'sciezka: ', thisFinder.paths[thisFinder.paths.length - 1]);
+                }
+              }
+            }
+          }
+        } else{
+          i= path.length;
+        }
+      }
+    }
+
 
   }
+
+  choosePath(){
+    const thisFinder = this;
+    thisFinder.correctPaths = [];
+
+    for(const path of thisFinder.paths){
+      if(path[0] == thisFinder.startEnd[0] && path[path.length-1] == thisFinder.startEnd[1]){
+        thisFinder.correctPaths.push(path);
+      }
+    }
+    thisFinder.bestRoute = thisFinder.correctPaths[0];
+    for( const path of thisFinder.correctPaths){
+      if(thisFinder.bestRoute.length > path.length){
+        thisFinder.bestRoute = path;
+      }
+    }
+
+  }
+
+  drawBestRoute(){
+    const thisFinder = this;
+    for(const id of thisFinder.bestRoute){
+      for( const box of thisFinder.dom.boxes){
+        if(box.classList.contains(id)){
+          box.classList.add(className.map.start);
+          if(box.classList.contains(className.map.end)){
+            box.classList.remove(className.map.end);
+          }
+        }
+      }
+    }
+  }
+
 }
 
 export default Finder;
