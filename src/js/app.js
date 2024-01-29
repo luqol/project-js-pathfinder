@@ -50,7 +50,11 @@ const app = {
     for(let page of thisApp.pages){
       page.classList.toggle(className.pages.active, page.id == pageID);
     }
-    
+    AOS.refresh();
+  },
+  
+  initAOS(){
+    AOS.init();
   },
 
   init: function(){
@@ -58,6 +62,7 @@ const app = {
     
     thisApp.initPages();
     thisApp.initFinder();
+    this.initAOS();
   },
   
 };
