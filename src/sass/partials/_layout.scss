@@ -23,3 +23,14 @@ section{
     display: block;
   }
 }
+
+
+@media (max-width: 768px){
+  .container{
+    width: 100%;
+  }
+
+  .logo{
+    width: 300px;
+  }
+}

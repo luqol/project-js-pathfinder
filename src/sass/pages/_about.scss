@@ -1,5 +1,6 @@
 .about-wrapper{
   position: relative;
+  min-height: 800px;
 }
 
 .first_txt{
@@ -12,11 +13,9 @@
 
 .first_img{
   position: absolute;
-  width: 50%;
-  height: 637px; 
+  width: 50%; 
   top: -57%;
   left: 7%;
-
   img{
     width: 100%;
     height: 100%;
@@ -40,5 +39,42 @@
     position: absolute;
     top: 30%;
     left: -28%;
+  }
+}
+
+@media (max-width: 768px){
+  .first_txt{
+    left: 53%;
+  }
+  .first_img{
+    top: -30%;
+  }
+
+  .secound_img{
+    height: auto;
+
+    .secound_txt{
+      top: 60%;
+   
+    }
+  }
+
+}
+
+
+@media (max-width: 650px){
+
+  .first_txt{
+    left: 50%;
+    width: 80%;
+    top: -22%;
+  }
+  .secound_img{
+    height: auto;
+
+    .secound_txt{
+      top: 65%;
+   
+    }
   }
 }

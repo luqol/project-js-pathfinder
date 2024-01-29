@@ -1,6 +1,6 @@
 .finder-wrapper{
   text-align: center;
-  height: 1000px;
+  min-height: 1000px;
   position: relative;
 }
 
@@ -46,4 +46,14 @@
 
 .box-right{
   border-right: 5px solid $color-light;
+}
+
+@media (max-width: 768px){
+  .map{
+    width: 350px;
+  }
+  .box{
+    width: 35px;
+    height: 35px;
+  }
 }

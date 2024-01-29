@@ -3,15 +3,16 @@
   font-weight: $font-black;
 
   .logo_title{
-    font-size: 100px;
-    letter-spacing: 60px;
+    font-size: $font-size-title-big;
+    letter-spacing: $font-size-title-big*0.6;
     margin-top: 210px;
     margin-bottom: 0px;
+    text-align: right;
   }
 
   .logo_subtitle{
-    font-size: 36px;
-    letter-spacing: 6px;
+    font-size: $font-size-subtitle-big;
+    letter-spacing: $font-size-subtitle-big*0.16;
     margin: 0;
     text-align: right;
   }
@@ -20,23 +21,54 @@
 .about_txt{
   h2{
     text-transform: uppercase;
-    font-size: 60px;
+    font-size: $font-size-page-title-big;
     font-weight: $font-bold;
     margin: 0;
-    letter-spacing: 8px;
+    letter-spacing: $font-size-page-title-big*0.13;
   }
 
   p{
-    font-size: 40px;
+    font-size: $font-size-subtitle-big;
     font-weight: $font-regular;
     margin: 0;
-    letter-spacing: 4px;
+    letter-spacing: $font-size-subtitle-big*0.11;
   }
 }
 
 .finder_title{
-  font-size: 60px;
+  font-size: $font-size-page-title-big;
   text-transform: uppercase;
-  letter-spacing: 8px;
+  letter-spacing: $font-size-page-title-big*0.13;
   font-weight: $font-bold;
+}
+
+@media (max-width: 768px){
+
+  .logo{
+    .logo_title{
+      font-size: $font-size-title-small;
+      letter-spacing: $font-size-subtitle-small*0.16;
+    }
+    .logo_subtitle{
+      font-size: $font-size-subtitle-small;
+      letter-spacing: $font-size-subtitle-small*0.16;
+    }
+  }
+
+  .about_txt{
+    h2{
+      font-size: $font-size-page-title-small;
+      letter-spacing: $font-size-page-title-small*0.13;
+    }
+    p{
+      font-size: $font-size-subtitle-small;
+      letter-spacing: $font-size-subtitle-small*0.11;
+    }
+  }
+
+  .finder_title{
+    font-size: $font-size-page-title-small;
+    letter-spacing: $font-size-page-title-small*0.13;
+  }
+
 }
