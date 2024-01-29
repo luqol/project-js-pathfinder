@@ -8,7 +8,9 @@ class Finder {
     thisFinder.paths = [];
     thisFinder.bestRoute = [];
 
+
     thisFinder.getElements(wrapper);
+    thisFinder.render();
     thisFinder.initActions();
 
   }
@@ -21,8 +23,28 @@ class Finder {
     thisFinder.dom.map = thisFinder.dom.wrapper.querySelector(select.containerOf.map);
     thisFinder.dom.btn = thisFinder.dom.wrapper.querySelector(select.finder.btn);
     thisFinder.dom.title = thisFinder.dom.wrapper.querySelector(select.finder.title);
-    thisFinder.dom.boxes = thisFinder.dom.wrapper.querySelectorAll(select.finder.boxes);
 
+  }
+  
+  render(){
+    const thisFinder = this;
+
+    for(let i = 0; i<10; i++){
+      for(let j = 0; j<10; j++){
+        let div = document.createElement('div');
+        let coord = i.toString() + j.toString();
+        div.classList.add(coord, className.map.box);
+        if(j == 9){
+          div.classList.add('box-right');
+        }
+        if(i == 9){
+          div.classList.add('box-bottom');
+        }
+
+        thisFinder.dom.map.appendChild(div);
+      }
+    }
+    thisFinder.dom.boxes = thisFinder.dom.wrapper.querySelectorAll(select.finder.boxes);
   }
 
   initActions() {
@@ -233,10 +255,10 @@ class Finder {
     for(const id of thisFinder.bestRoute){
       for( const box of thisFinder.dom.boxes){
         if(box.classList.contains(id)){
-          box.classList.add(className.map.start);
           if(box.classList.contains(className.map.end)){
             box.classList.remove(className.map.end);
           }
+          box.classList.add(className.map.start);
         }
       }
     }
