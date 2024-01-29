@@ -1,4 +1,5 @@
 import { className, select, settings } from '../settings.js';
+import { utils } from '../utils.js';
 
 class Finder {
   constructor(wrapper) {
@@ -24,15 +25,17 @@ class Finder {
     thisFinder.dom.btn = thisFinder.dom.wrapper.querySelector(select.finder.btn);
     thisFinder.dom.title = thisFinder.dom.wrapper.querySelector(select.finder.title);
 
+    thisFinder.dom.mainWrapper = document.querySelector(select.containerOf.mainWrapper);
+
   }
-  
+
   render(){
     const thisFinder = this;
 
     for(let i = 0; i<10; i++){
       for(let j = 0; j<10; j++){
-        let div = document.createElement('div');
-        let coord = i.toString() + j.toString();
+        const div = document.createElement('div');
+        const coord = i.toString() + j.toString();
         div.classList.add(coord, className.map.box);
         if(j == 9){
           div.classList.add('box-right');
@@ -106,7 +109,8 @@ class Finder {
       clickedElement.classList.add(className.map.active);
       thisFinder.map.push(coord);
     } else {
-      console.log('to far from path');
+
+      utils.alert(thisFinder.dom.mainWrapper,'path must be adjacent to path');
     }
 
     //console.log(thisFinder.map);
@@ -144,11 +148,11 @@ class Finder {
 
   changePhase(phase) {
     const thisFinder = this;
-    if (phase == settings.finderPhase.first.btn) {
+    if (phase == settings.finderPhase.first.btn && thisFinder.map.length > 1) {
       thisFinder.dom.title.innerHTML = settings.finderPhase.secound.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.secound.btn;
 
-    } else if (phase == settings.finderPhase.secound.btn) {
+    } else if (phase == settings.finderPhase.secound.btn && thisFinder.startEnd[0] != undefined && thisFinder.startEnd[1] != undefined) {
       thisFinder.dom.title.innerHTML = settings.finderPhase.third.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.third.btn;
       thisFinder.bestPath();
@@ -167,6 +171,13 @@ class Finder {
           box.classList.remove(className.map.end);
         }
       }
+    }
+
+    if(phase == settings.finderPhase.first.btn && thisFinder.map.length <= 1){
+      utils.alert(thisFinder.dom.mainWrapper,'path must contain at least 2 elements');
+    }
+    if(phase == settings.finderPhase.secound.btn && (thisFinder.startEnd[0] == undefined || thisFinder.startEnd[1] == undefined)){
+      utils.alert(thisFinder.dom.mainWrapper,'please mark the beginning and end of the path');
     }
 
   }

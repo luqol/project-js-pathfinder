@@ -8,3 +8,16 @@
   letter-spacing: 3px;
 
 }
+
+
+.alert{
+  position: absolute;
+  left: 5%;
+  top: -37%;
+  border: 2px solid $color-light;  
+  border-radius: $radius;
+  background-color: $color-dark;
+  padding: 20px;
+  font-weight: $font-semibold;
+  font-size: 1.25rem;
+}

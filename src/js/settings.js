@@ -8,6 +8,7 @@ export const className ={
     start: 'start',
     end: 'end',
   },
+  alert: 'alert',
 };
 
 export const select = {
@@ -19,6 +20,7 @@ export const select = {
     pages: '#pages',
     finder: '.finder_body',
     map: '.map',
+    mainWrapper: '.finder-wrapper',
   },
   nav: {
     links: '.main_nav a',
