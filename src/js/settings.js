@@ -7,6 +7,7 @@ export const className ={
     active: 'active',
     start: 'start',
     end: 'end',
+    selected: 'selected',
   },
   alert: 'alert',
 };

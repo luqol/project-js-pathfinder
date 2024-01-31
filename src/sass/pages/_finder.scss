@@ -29,6 +29,10 @@
   &.active{
     background-color: $color-path;
   }
+  &.selected{
+    background-color: $color-selected;
+    
+  }
 
   &.start{
     background-color: $color-start;

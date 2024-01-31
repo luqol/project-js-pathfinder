@@ -112,7 +112,7 @@ class Finder {
 
       utils.alert(thisFinder.dom.mainWrapper,'path must be adjacent to path');
     }
-
+    thisFinder.drawSelected();
     //console.log(thisFinder.map);
   }
 
@@ -272,6 +272,33 @@ class Finder {
           box.classList.add(className.map.start);
         }
       }
+    }
+  }
+
+  drawSelected(){
+    const thisFinder = this;
+
+    /* remove selected from boxes */
+    for (const box of thisFinder.dom.boxes){
+      box.classList.remove(className.map.selected);
+    }
+
+    /* add selected to boxes*/
+    for(const path of thisFinder.map){
+      const adjectedPath = thisFinder.adjectedPoint(path);
+      for(const coord of adjectedPath){
+        let coordBox;
+        for(const box of thisFinder.dom.boxes){
+          if(box.classList[0] == coord){
+            coordBox = box;
+          }
+        }
+
+        if(!coordBox.classList.contains(className.map.active)){
+          coordBox.classList.add(className.map.selected);
+        }
+      }
+
     }
   }
 
