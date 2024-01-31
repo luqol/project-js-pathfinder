@@ -43,12 +43,12 @@
 }
 
 @media (max-width: 768px){
-
   .logo{
     .logo_title{
       font-size: $font-size-title-small;
       letter-spacing: $font-size-subtitle-small*0.16;
     }
+
     .logo_subtitle{
       font-size: $font-size-subtitle-small;
       letter-spacing: $font-size-subtitle-small*0.16;
@@ -60,6 +60,7 @@
       font-size: $font-size-page-title-small;
       letter-spacing: $font-size-page-title-small*0.13;
     }
+
     p{
       font-size: $font-size-subtitle-small;
       letter-spacing: $font-size-subtitle-small*0.11;
