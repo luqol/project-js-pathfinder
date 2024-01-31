@@ -1,4 +1,4 @@
-import { className, select, settings } from '../settings.js';
+import { className, select, settings, templates } from '../settings.js';
 import { utils } from '../utils.js';
 
 class Finder {
@@ -70,6 +70,11 @@ class Finder {
       event.preventDefault();
       thisFinder.changePhase(event.target.innerHTML);
     });
+
+    /*thisFinder.dom.btnSummary.addEventListener('click', function(event){
+      event.preventDefault(); 
+      thisFinder.dom.summary.classList.remove(className.summary.active);
+    }); */
   }
 
   startFinish(clickedElement) {
@@ -156,6 +161,7 @@ class Finder {
       thisFinder.dom.title.innerHTML = settings.finderPhase.third.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.third.btn;
       thisFinder.bestPath();
+      thisFinder.showSummary();
     } else if (phase == settings.finderPhase.third.btn) {
       thisFinder.dom.title.innerHTML = settings.finderPhase.first.info;
       thisFinder.dom.btn.innerHTML = settings.finderPhase.first.btn;
@@ -164,6 +170,7 @@ class Finder {
       thisFinder.paths = [];
       thisFinder.correctPaths = [];
       thisFinder.bestRoute =[];
+      thisFinder.drawSelected();
       for (let box of thisFinder.dom.boxes) {
         if (box.classList.contains(className.map.active)) {
           box.classList.remove(className.map.active);
@@ -193,11 +200,11 @@ class Finder {
 
     thisFinder.drawBestRoute();
 
-    console.log('map', thisFinder.map);
-    console.log('startEnd', thisFinder.startEnd);
-    console.log('paths', thisFinder.paths);
-    console.log('correctPaths', thisFinder.correctPaths);
-    console.log('bestRoute', thisFinder.bestRoute);
+    //console.log('map', thisFinder.map);
+    //console.log('startEnd', thisFinder.startEnd);
+    //console.log('paths', thisFinder.paths);
+    //console.log('correctPaths', thisFinder.correctPaths);
+    //console.log('bestRoute', thisFinder.bestRoute);
   }
 
   checkPath() {
@@ -302,6 +309,37 @@ class Finder {
     }
   }
 
+  showSummary(){
+    const thisFinder = this;
+
+    const sumamrySettings = {
+      full: thisFinder.map.length,
+      longest: 'xx',
+      shortest: thisFinder.bestRoute.length,
+    };
+
+
+    /* generat HMTL basen on template */
+    const generatedHTML = templates.summary(sumamrySettings);
+    /* create element using utilis.createElementFromHTML */
+    const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+    /* find body*/
+    const mainContainer = document.querySelector('body');
+    /* add summary to body */
+    mainContainer.appendChild(generatedDOM);
+
+    const summary = document.querySelector(select.containerOf.summary);
+    const btnSummary = document.querySelector(select.summary.btn);
+
+    btnSummary.addEventListener('click', function(event){
+      event.preventDefault(); 
+      summary.classList.remove(className.summary.active);
+      generatedDOM.remove();
+    });
+
+  }
+
+  
 }
 
 export default Finder;

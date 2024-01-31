@@ -31,7 +31,7 @@
   }
   &.selected{
     background-color: $color-selected;
-    
+
   }
 
   &.start{
@@ -52,6 +52,7 @@
   border-right: 5px solid $color-light;
 }
 
+
 @media (max-width: 768px){
   .map{
     width: 350px;
@@ -62,3 +63,4 @@
     height: 35px;
   }
 }
+

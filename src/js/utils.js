@@ -16,3 +16,8 @@ utils.alert = function(wrapper, msg){
 
 };
 
+utils.createDOMFromHTML = function(htmlString) {
+  let div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+  return div.firstChild;
+};

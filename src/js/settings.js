@@ -10,9 +10,16 @@ export const className ={
     selected: 'selected',
   },
   alert: 'alert',
+  summary: {
+    active: 'active',
+    
+  }
 };
 
 export const select = {
+  templateOf: {
+    summary: '#template-summary',
+  },
   pageID: {
     about: 'about',
     finder: 'finder',
@@ -22,6 +29,7 @@ export const select = {
     finder: '.finder_body',
     map: '.map',
     mainWrapper: '.finder-wrapper',
+    summary: '.summary',
   },
   nav: {
     links: '.main_nav a',
@@ -31,6 +39,9 @@ export const select = {
     btn: '.btn',
     boxes: '.box',
     path: '.box.active',
+  },
+  summary:{
+    btn: '.btn-summary',
   },
 };
 
@@ -51,3 +62,6 @@ export const settings = {
   },
 };
 
+export const templates = {
+  summary: Handlebars.compile(document.querySelector(select.templateOf.summary).innerHTML),
+};

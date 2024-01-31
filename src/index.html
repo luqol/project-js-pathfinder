@@ -70,8 +70,19 @@
         <p>All rights reserved</p>
     </footer>
 
+    <script id="template-summary" type="text/x-handlebars-template">
+        <div class="summary active" >
+        <div class="summary_box">
+            <h2 class="summary_title">Summary</h2>
+            <p>Full route: <span class="red">{{full}}</span><span> fields<span></p>
+            <p>The longest route: <span class="red">{{longest}}</span><span> fields<span></p>
+            <p>The shortest route: <span class="green">{{shortest}}</span><span> fields<span></p>
+            <button type="submit" class="btn-summary">X</button>
+        </div>
+    </div>
+    </script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
     <script type="module" src="js/app.js"></script>
 
 </body>

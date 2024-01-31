@@ -42,6 +42,28 @@
   font-weight: $font-bold;
 }
 
+.summary_box{
+  .summary_title{
+    font-size: $font-size-subtitle-big;
+    text-transform: uppercase;
+    font-weight: $font-black;
+    padding: 30px;
+    margin: 0 35%;
+    padding-top: 50px;
+  }
+  p{
+    font-size: $font-size-page-title-small;
+    text-transform: uppercase;
+    font-weight: $font-black;
+    margin: 0;
+    padding: 10px;
+    margin-left: 25%;
+    span{
+      font-weight: $font-semibold;
+    }
+  }
+}
+
 @media (max-width: 768px){
   .logo{
     .logo_title{
