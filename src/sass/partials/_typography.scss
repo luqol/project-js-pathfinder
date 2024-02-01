@@ -96,4 +96,26 @@
     letter-spacing: $font-size-page-title-small*0.13;
   }
 
+  .summary_box{
+    .summary_title{
+      font-size: $font-size-page-title-small;
+      font-weight: $font-black;
+      padding: 20px;
+      margin: 0 28%;
+      padding-top: 50px;
+    }
+  
+    p{
+      font-size: $font-size-subtitle-small;
+      font-weight: $font-black;
+      margin: 0;
+      padding: 10px;
+      margin-left: 13%;
+  
+      span{
+        font-weight: $font-semibold;
+      }
+    }
+  }
+
 }
