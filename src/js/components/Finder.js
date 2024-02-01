@@ -7,6 +7,7 @@ class Finder {
     thisFinder.map = [];
     thisFinder.startEnd = [];
     thisFinder.paths = [];
+    thisFinder.correctPaths = [];
     thisFinder.bestRoute = [];
 
 
@@ -71,10 +72,6 @@ class Finder {
       thisFinder.changePhase(event.target.innerHTML);
     });
 
-    /*thisFinder.dom.btnSummary.addEventListener('click', function(event){
-      event.preventDefault(); 
-      thisFinder.dom.summary.classList.remove(className.summary.active);
-    }); */
   }
 
   startFinish(clickedElement) {
@@ -107,8 +104,11 @@ class Finder {
       thisFinder.map.push(coord);
     } /* remove box if exist in map arr */
     else if (thisFinder.map.includes(coord)) {
-      clickedElement.classList.remove(className.map.active);
-      thisFinder.removePath(coord);
+      /* check if will be hole in path*/
+      if(thisFinder.checkHole(coord)){
+        clickedElement.classList.remove(className.map.active);
+        thisFinder.removePath(thisFinder.map, coord);
+      }
     }/* check if box is adjected to the other box */
     else if (thisFinder.addPath(coord)) {
       clickedElement.classList.add(className.map.active);
@@ -121,10 +121,134 @@ class Finder {
     //console.log(thisFinder.map);
   }
 
-  removePath(coord) {
+  checkHole(coord){
     const thisFinder = this;
-    const index = thisFinder.map.indexOf(coord);
-    thisFinder.map.splice(index, 1);
+    const adjectedPoints = thisFinder.adjectedPoint(coord);
+    const adjectedMapPoints = [];
+
+    for(const point of adjectedPoints){
+      if(thisFinder.map.includes(point)){
+        adjectedMapPoints.push(point);
+      }
+    }
+    
+    if (adjectedMapPoints.length == 1 || adjectedMapPoints.length == 0){
+      return true;
+    } 
+    if (adjectedMapPoints.length == 2){
+      let checkPaths = [];
+      checkPaths.push([adjectedMapPoints[0]]);
+      let newMap = thisFinder.map.slice();
+      thisFinder.removePath(newMap,coord);
+
+      //console.log('start', adjectedMapPoints[0]);
+      //console.log('end', adjectedMapPoints[1]);
+      //console.log('sciezki', checkPaths);
+      //console.log('nowaMapa', newMap);
+
+      thisFinder.checkPath(newMap, checkPaths, adjectedMapPoints[0], adjectedMapPoints[1]);
+
+      //console.log('sciezki', checkPaths);
+      for (const path of checkPaths){
+        if(path[0] == adjectedMapPoints[0] && path[path.length-1] == adjectedMapPoints[1]){
+          return true;
+        }
+      }
+    }
+    if (adjectedMapPoints.length == 3){
+      let checkPaths = [];
+      checkPaths.push([adjectedMapPoints[0]]);
+      let newMap = thisFinder.map.slice();
+      thisFinder.removePath(newMap,coord);
+      let connectPoints = false;
+
+      /* check if adjectedMapPoints[0] have connect to adjectedMapPoints[1]*/
+      thisFinder.checkPath(newMap, checkPaths, adjectedMapPoints[0], adjectedMapPoints[1]);
+      for (const path of checkPaths){
+        if(path[0] == adjectedMapPoints[0] && path[path.length-1] == adjectedMapPoints[1]){
+          connectPoints = true; 
+        }
+      }
+      /* check if adjectedMapPoints[0] have connect to adjectedMapPoints[2]*/
+      if (connectPoints == true){
+        connectPoints = false;
+        checkPaths = [];
+        checkPaths.push([adjectedMapPoints[0]]);
+        thisFinder.checkPath(newMap, checkPaths, adjectedMapPoints[0], adjectedMapPoints[2]);
+        for (const path of checkPaths){
+          if(path[0] == adjectedMapPoints[0] && path[path.length-1] == adjectedMapPoints[2]){
+            connectPoints = true; 
+          }
+        }
+      } 
+
+      if(connectPoints == true){
+        return true;
+      } else{
+        utils.alert(thisFinder.dom.mainWrapper,'there will be a hole in the path');
+        return false;
+      }
+
+    }
+    if (adjectedMapPoints.length == 4){
+      let checkPaths = [];
+      checkPaths.push([adjectedMapPoints[0]]);
+      let newMap = thisFinder.map.slice();
+      thisFinder.removePath(newMap,coord);
+      let connectPoints = false;
+
+      /* check if adjectedMapPoints[0] have connect to adjectedMapPoints[1]*/
+
+      thisFinder.checkPath(newMap, checkPaths, adjectedMapPoints[0], adjectedMapPoints[1]);
+      for (const path of checkPaths){
+        if(path[0] == adjectedMapPoints[0] && path[path.length-1] == adjectedMapPoints[1]){
+          connectPoints = true; 
+        }
+      }
+
+      /* check if adjectedMapPoints[0] have connect to adjectedMapPoints[2]*/
+
+      if (connectPoints == true){
+        connectPoints = false;
+        checkPaths = [];
+        checkPaths.push([adjectedMapPoints[0]]);
+        thisFinder.checkPath(newMap, checkPaths, adjectedMapPoints[0], adjectedMapPoints[2]);
+        for (const path of checkPaths){
+          if(path[0] == adjectedMapPoints[0] && path[path.length-1] == adjectedMapPoints[2]){
+            connectPoints = true; 
+          }
+        }
+      } 
+
+      /* check if adjectedMapPoints[0] have connect to adjectedMapPoints[3]*/
+
+      if (connectPoints == true){
+        connectPoints = false;
+        checkPaths = [];
+        checkPaths.push([adjectedMapPoints[0]]);
+        thisFinder.checkPath(newMap, checkPaths, adjectedMapPoints[0], adjectedMapPoints[3]);
+        for (const path of checkPaths){
+          if(path[0] == adjectedMapPoints[0] && path[path.length-1] == adjectedMapPoints[3]){
+            connectPoints = true; 
+          }
+        }
+      }
+
+      if(connectPoints == true){
+        return true;
+      } else{
+        utils.alert(thisFinder.dom.mainWrapper,'there will be a hole in the path');
+        return false;
+      }
+
+    }
+    utils.alert(thisFinder.dom.mainWrapper,'there will be a hole in the path');
+    return false;
+  }
+
+  removePath(map, coord) {
+    const index = map.indexOf(coord);
+    map.splice(index, 1);
   }
 
   addPath(coord) {
@@ -194,7 +318,7 @@ class Finder {
 
     thisFinder.paths.push([thisFinder.startEnd[0]]);
 
-    thisFinder.checkPath();
+    thisFinder.checkPath(thisFinder.map, thisFinder.paths, thisFinder.startEnd[0], thisFinder.startEnd[1]);
 
     thisFinder.choosePath();
 
@@ -207,13 +331,13 @@ class Finder {
     //console.log('bestRoute', thisFinder.bestRoute);
   }
 
-  checkPath() {
+  checkPath(map, paths, start, end) {
     const thisFinder = this;
 
-    for (let path of thisFinder.paths) {
+    for (let path of paths) {
       //console.log(' ');
-      //console.log('Nowa sciezka ', thisFinder.paths.indexOf(path));
-      //console.log('insex: ', thisFinder.paths.indexOf(path), 'sciezka: ', path);
+      //console.log('Nowa sciezka ', paths.indexOf(path));
+      //console.log('index: ', paths.indexOf(path), 'sciezka: ', path);
 
       for(let i = 0; i < path.length; i++){
         //console.log(' ');
@@ -222,21 +346,21 @@ class Finder {
         //console.log('last point', lastPoint);
         const adjectedPoints = thisFinder.adjectedPoint(lastPoint);
         let newPath = false;
-        if(lastPoint != thisFinder.startEnd[1]){
+        if(lastPoint != end){
           for (const adPoint of adjectedPoints) {
-            for (const coord of thisFinder.map) {
+            for (const coord of map) {
               if (adPoint == coord && !path.includes(adPoint)) {
                 //console.log('wspolne pkt', adPoint);
-                if (newPath == false && adPoint != lastPoint && adPoint != thisFinder.startEnd[0]) {
+                if (newPath == false && adPoint != lastPoint && adPoint != start) {
                   //console.log('dodanie pkt', adPoint);
                   path.push(adPoint);
                   //console.log('akutalna scieska', path);
                   newPath = true;
-                } else if (adPoint != lastPoint && adPoint != thisFinder.startEnd[0]) {
+                } else if (adPoint != lastPoint && adPoint != start) {
                   //console.log('dodanie nowej sciezki');
-                  thisFinder.paths.push(path.slice(0, -1));
-                  thisFinder.paths[thisFinder.paths.length - 1].push(adPoint);
-                  //console.log('nowa sciezka', thisFinder.paths.length - 1, 'sciezka: ', thisFinder.paths[thisFinder.paths.length - 1]);
+                  paths.push(path.slice(0, -1));
+                  paths[paths.length - 1].push(adPoint);
+                  //console.log('nowa sciezka', paths.length - 1, 'sciezka: ', paths[paths.length - 1]);
                 }
               }
             }
@@ -247,12 +371,11 @@ class Finder {
       }
     }
 
-
+    
   }
 
   choosePath(){
     const thisFinder = this;
-    thisFinder.correctPaths = [];
 
     for(const path of thisFinder.paths){
       if(path[0] == thisFinder.startEnd[0] && path[path.length-1] == thisFinder.startEnd[1]){
@@ -314,7 +437,7 @@ class Finder {
 
     const sumamrySettings = {
       full: thisFinder.map.length,
-      longest: 'xx',
+      longest: thisFinder.longestPath(),
       shortest: thisFinder.bestRoute.length,
     };
 
@@ -339,7 +462,19 @@ class Finder {
 
   }
 
-  
+  longestPath(){
+    const thisFinder = this;
+    let longestRoute = thisFinder.correctPaths[0];
+
+    for (const path of thisFinder.correctPaths){
+      if(longestRoute.length < path.length){
+        longestRoute = path;
+      }
+    }
+
+    return longestRoute.length;
+  }
+
 }
 
 export default Finder;

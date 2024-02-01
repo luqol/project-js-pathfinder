@@ -1,45 +1,48 @@
 .summary{
-    position: absolute;
-    z-index: 1;
-    background-color: $color-halfdark;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-    display: none;
-    &.active{
-        display: block;
-    }
+  position: absolute;
+  z-index: 1;
+  background-color: $color-halfdark;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: none;
+
+  &.active{
+    display: block;
   }
+}
   
-  .summary_box{
-    background-color: $color-light;
-    width: 40%;
-    color: $color-dark;
-    margin: auto;
-    margin-top: 38%;
-    height: 350px;
-    position: relative;
-    .red{
-      color: $color-path;
-      font-weight: $font-black;
-    }
-    .green{
-      color: $color-start;
-      font-weight: $font-black;
-    }
+.summary_box{
+  background-color: $color-light;
+  width: 40%;
+  color: $color-dark;
+  margin: auto;
+  margin-top: 38%;
+  height: 350px;
+  position: relative;
+
+  .red{
+    color: $color-path;
+    font-weight: $font-black;
   }
 
-  .btn-summary{
-    border: none;
-    background-color: $color-light;
-    position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 36px;
-    font-weight: $font-semibold;
-    padding: 20px;
-    cursor: pointer;
+  .green{
+    color: $color-start;
+    font-weight: $font-black;
   }
+}
+
+.btn-summary{
+  border: none;
+  background-color: $color-light;
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 36px;
+  font-weight: $font-semibold;
+  padding: 20px;
+  cursor: pointer;
+}
 
   
