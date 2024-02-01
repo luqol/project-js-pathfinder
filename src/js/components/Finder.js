@@ -55,6 +55,7 @@ class Finder {
     const thisFinder = this;
 
     thisFinder.dom.map.addEventListener('click', function (event) {
+      event.preventDefault();
       const clickedElement = event.target;
 
       if (clickedElement.classList.contains(className.map.box)
