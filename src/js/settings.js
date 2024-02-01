@@ -60,6 +60,10 @@ export const settings = {
       btn: 'Start again',
     },
   },
+  db: {
+    url: '//' + window.location.hostname + (window.location.hostname=='localhost' ? ':3131' : ''),
+    templates: 'templates',
+  }
 };
 
 export const templates = {
